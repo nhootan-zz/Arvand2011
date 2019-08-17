@@ -2,32 +2,33 @@
 #define RNG_H
 
 class RandomNumberGenerator {
-    static const int N = 624;
-    unsigned int mt[N];
-    int mti;
-public:
-    RandomNumberGenerator();         // seed with time-dependent value
-    RandomNumberGenerator(int seed); // seed with int; see comments for seed()
-    RandomNumberGenerator(unsigned int *array, int count); // seed with array
-    RandomNumberGenerator(const RandomNumberGenerator &copy);
-    RandomNumberGenerator &operator=(const RandomNumberGenerator &copy);
+  static const int N = 624;
+  unsigned int mt[N];
+  int mti;
 
-    void seed(int s);
-    void seed(unsigned int *array, int len);
+ public:
+  RandomNumberGenerator();          // seed with time-dependent value
+  RandomNumberGenerator(int seed);  // seed with int; see comments for seed()
+  RandomNumberGenerator(unsigned int *array, int count);  // seed with array
+  RandomNumberGenerator(const RandomNumberGenerator &copy);
+  RandomNumberGenerator &operator=(const RandomNumberGenerator &copy);
 
-    unsigned int next32();      // random integer in [0..2^32-1]
-    int next31();               // random integer in [0..2^31-1]
-    double next_half_open();    // random float in [0..1), 2^53 possible values
-    double next_closed();       // random float in [0..1], 2^53 possible values
-    double next_open();         // random float in (0..1), 2^53 possible values
-    int next(int bound);        // random integer in [0..bound), bound < 2^31
-    int operator()(int bound) { // same as next()
-        return next(bound);
-    }
-    double next();              // same as next_half_open()
-    double operator()() {       // same as next_half_open()
-        return next_half_open();
-    }
+  void seed(int s);
+  void seed(unsigned int *array, int len);
+
+  unsigned int next32();       // random integer in [0..2^32-1]
+  int next31();                // random integer in [0..2^31-1]
+  double next_half_open();     // random float in [0..1), 2^53 possible values
+  double next_closed();        // random float in [0..1], 2^53 possible values
+  double next_open();          // random float in (0..1), 2^53 possible values
+  int next(int bound);         // random integer in [0..bound), bound < 2^31
+  int operator()(int bound) {  // same as next()
+    return next(bound);
+  }
+  double next();         // same as next_half_open()
+  double operator()() {  // same as next_half_open()
+    return next_half_open();
+  }
 };
 
 /*

@@ -41,7 +41,7 @@ static const bool DEFAULT_S_UNUSED = false;
 // Adaptive Local Restarting
 static const double DEFAULT_EPSILON = 0.1;
 // Bias
-//static const int DEFUALT_BIAS = 0;
+// static const int DEFUALT_BIAS = 0;
 // MHA
 static const double DEFUALT_MHA_T = 10;
 static const double DEFUALT_MHA_W = 1;
@@ -50,41 +50,39 @@ static const double DEFUALT_MDA_T = 0.5;
 // AP
 static const double DEFUALT_ALPHA = 0.9;
 
-enum Bias {UNIFORM = 0, MHA = 1, AGRESSIVE_MHA = 2, MDA = 3};
-class MRW_Parameters{
-// This class is a container for the parameters used in MRW
-public:	
-
-	Bias bias; // determines the biasing
-	//int eval_limit;
-    double rl; // the local restarting rate
-    double rg; // the global restarting rate
-    double pe; // evaluation rate
-    double alpha; // the parameter alpha used in acceptable_progress
-    double mha_temperature;
-    double mha_w; // the weight of current preferred operators
-    double mda_temperature;
-    bool adaptive_gr;
-    bool deterministic_gr;
-    bool acceptable_progress;
-    bool adaptive_lr;
-    bool sample_unused; // first samples actions that are not used before
-    double epsilon;
-    int nj; // number of walks run before each jumping
-    int tg;
-    // TODO move the adaptive_lr system to another class
-    int num_samples;
-    int last_rl;
-    std::vector<double> rl_candidates;
-    std::vector<double> value;
-    std::vector<double> cost;
-    std::vector<double> num;
-    void feedback_rl(int value, int cost);
-    void change_rl();
-    int random_rl();
-    MRW_Parameters();
-    void dump();
+enum Bias { UNIFORM = 0, MHA = 1, AGRESSIVE_MHA = 2, MDA = 3 };
+class MRW_Parameters {
+  // This class is a container for the parameters used in MRW
+ public:
+  Bias bias;     // determines the biasing
+                 // int eval_limit;
+  double rl;     // the local restarting rate
+  double rg;     // the global restarting rate
+  double pe;     // evaluation rate
+  double alpha;  // the parameter alpha used in acceptable_progress
+  double mha_temperature;
+  double mha_w;  // the weight of current preferred operators
+  double mda_temperature;
+  bool adaptive_gr;
+  bool deterministic_gr;
+  bool acceptable_progress;
+  bool adaptive_lr;
+  bool sample_unused;  // first samples actions that are not used before
+  double epsilon;
+  int nj;  // number of walks run before each jumping
+  int tg;
+  // TODO move the adaptive_lr system to another class
+  int num_samples;
+  int last_rl;
+  std::vector<double> rl_candidates;
+  std::vector<double> value;
+  std::vector<double> cost;
+  std::vector<double> num;
+  void feedback_rl(int value, int cost);
+  void change_rl();
+  int random_rl();
+  MRW_Parameters();
+  void dump();
 };
 
 #endif
-

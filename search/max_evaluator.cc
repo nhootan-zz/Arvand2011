@@ -1,27 +1,24 @@
 #include "max_evaluator.h"
 
+#include <cassert>
+
 #include "option_parser.h"
 #include "plugin.h"
 
-#include <cassert>
-
 using namespace std;
 
-
 MaxEvaluator::MaxEvaluator(const vector<ScalarEvaluator *> &subevaluators)
-    : CombiningEvaluator(subevaluators) {
-}
+    : CombiningEvaluator(subevaluators) {}
 
-MaxEvaluator::~MaxEvaluator() {
-}
+MaxEvaluator::~MaxEvaluator() {}
 
 int MaxEvaluator::combine_values(const vector<int> &values) {
-    int result = 0;
-    for (size_t i = 0; i < values.size(); ++i) {
-        assert(values[i] >= 0);
-        result = max(result, values[i]);
-    }
-    return result;
+  int result = 0;
+  for (size_t i = 0; i < values.size(); ++i) {
+    assert(values[i] >= 0);
+    result = max(result, values[i]);
+  }
+  return result;
 }
 
 /* commented out to silence compiler warning while this is unused.

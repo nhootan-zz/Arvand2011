@@ -19,12 +19,11 @@
  *
  *********************************************************************/
 
-
 #ifndef NEIGHBORHOOD_GRAPH_H
 #define NEIGHBORHOOD_GRAPH_H
-#include "../state.h"
-
 #include <vector>
+
+#include "../state.h"
 #define LOADING_FACTOR 2
 #define PER_NODE_OVERHEAD 12
 using namespace std;
@@ -32,85 +31,79 @@ class Operator;
 class NodeInfo;
 
 class Node {
-    state_var_t *state_buffer;
-    NodeInfo &info;
-    size_t* parents_num;
+  state_var_t *state_buffer;
+  NodeInfo &info;
+  size_t *parents_num;
 
-public:
-    Node(state_var_t *state_buffer_, NodeInfo &info_, size_t* parents_num_byte);
+ public:
+  Node(state_var_t *state_buffer_, NodeInfo &info_, size_t *parents_num_byte);
 
-    state_var_t *get_state_buffer() {
-      return state_buffer;
-    }
-    State get_state() const;
+  state_var_t *get_state_buffer() { return state_buffer; }
+  State get_state() const;
 
-    bool is_goal() const;
-    bool is_open() const;
-    bool is_closed() const;
-    bool is_dead_end() const;
-    bool is_expanded() const;
-    bool is_reg_expanded() const;
-    bool is_new() const;
+  bool is_goal() const;
+  bool is_open() const;
+  bool is_closed() const;
+  bool is_dead_end() const;
+  bool is_expanded() const;
+  bool is_reg_expanded() const;
+  bool is_new() const;
 
-    int get_f() const;
-    int get_g() const;
-    int get_h() const;
-    int get_level() const;
-    int get_parent_num() const;
-    
-    void set_level(int  l);
+  int get_f() const;
+  int get_g() const;
+  int get_h() const;
+  int get_level() const;
+  int get_parent_num() const;
 
-	void add_parent(const Node &parent_node, const Operator *parent_op);
-	void make_permanent();
-	void make_reg_permanent();
-	
-	
-	void lazy_open(int h, const Node &parent_node, const Operator *parent_op);
-	void lazy_reopen(const Node &parent_node, const Operator *parent_op);
+  void set_level(int l);
 
-	void update_and_open(int h, int g, int op_cost);
-	void update_and_reopen(int g, int op_cost);
-    
-    void open_initial(int h);
-    void open(int h, const Node &parent_node, const Operator *parent_op);
-    void reopen(const Node &parent_node, const Operator *parent_op);
-    
-    void open(int h, const Node &parent_node, const Operator *parent_op, int op_cost);
-    void reopen(const Node &parent_node, const Operator *parent_op, int op_cost);
+  void add_parent(const Node &parent_node, const Operator *parent_op);
+  void make_permanent();
+  void make_reg_permanent();
 
-    void close();
-    void mark_as_dead_end();
-    const vector<pair<state_var_t *, const Operator *> > get_parents();
+  void lazy_open(int h, const Node &parent_node, const Operator *parent_op);
+  void lazy_reopen(const Node &parent_node, const Operator *parent_op);
 
+  void update_and_open(int h, int g, int op_cost);
+  void update_and_reopen(int g, int op_cost);
 
-    void dump();
+  void open_initial(int h);
+  void open(int h, const Node &parent_node, const Operator *parent_op);
+  void reopen(const Node &parent_node, const Operator *parent_op);
+
+  void open(int h, const Node &parent_node, const Operator *parent_op,
+            int op_cost);
+  void reopen(const Node &parent_node, const Operator *parent_op, int op_cost);
+
+  void close();
+  void mark_as_dead_end();
+  const vector<pair<state_var_t *, const Operator *> > get_parents();
+
+  void dump();
 };
 
-//class BoostingNode : public SearchNode{
-	
+// class BoostingNode : public SearchNode{
+
 // };
 
 class NeigborhoodGraph {
-    class HashTable;
-    HashTable *nodes;
-    bool keep_shallow_copy;
-    size_t parents_num;
-public:
-    NeigborhoodGraph();
-    ~NeigborhoodGraph();
-    int size() const;
-    size_t memory_usage() const;
-    Node get_node(const State &state);
-    void trace_path(const State &goal_state,
-		    std::vector<const Operator *> &path) const;
+  class HashTable;
+  HashTable *nodes;
+  bool keep_shallow_copy;
+  size_t parents_num;
 
-    void set_shallow(){
-    	keep_shallow_copy = true;
-    }
-    void dump();
-    void statistics() const;
+ public:
+  NeigborhoodGraph();
+  ~NeigborhoodGraph();
+  int size() const;
+  size_t memory_usage() const;
+  Node get_node(const State &state);
+  void trace_path(const State &goal_state,
+                  std::vector<const Operator *> &path) const;
+
+  void set_shallow() { keep_shallow_copy = true; }
+  void dump();
+  void statistics() const;
 };
-
-
 
 #endif

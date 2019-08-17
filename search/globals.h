@@ -1,11 +1,11 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include "operator_cost.h"
-
 #include <iosfwd>
 #include <string>
 #include <vector>
+
+#include "operator_cost.h"
 
 class AxiomEvaluator;
 class CausalGraph;
@@ -39,9 +39,9 @@ bool are_mutex(const std::pair<int, int> &a, const std::pair<int, int> &b);
 
 // Added by Hootan
 // Begin
-extern Simulator* g_simulator;
-extern Analyzer* g_analyzer;
-extern Postprocessor* g_postprocessor;
+extern Simulator *g_simulator;
+extern Analyzer *g_analyzer;
+extern Postprocessor *g_postprocessor;
 extern std::string g_input_plan_filename;
 extern int g_seed;
 extern int g_state_id;

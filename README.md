@@ -24,9 +24,7 @@ Hence, the building process is the same:
 
 ```
 git clone https://github.com/nhootan/Arvand2011.git
-
 cd Arvand2011
-
 ./build_all
 ```
 
@@ -36,6 +34,7 @@ run it.
 
 ## Running the Planner
 
+To run the algorithm once to find a single plan, use:
 ```
 cd Arvand2011
 ./plan domainfile problemfile --search "mrw(ff())"

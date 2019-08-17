@@ -5,11 +5,12 @@
 #include "landmark_graph.h"
 
 class LandmarkFactoryRpgExhaust : public LandmarkFactory {
-public:
-    LandmarkFactoryRpgExhaust(const Options &opts);
-    virtual ~LandmarkFactoryRpgExhaust() {}
-private:
-    void generate_landmarks();
+ public:
+  LandmarkFactoryRpgExhaust(const Options &opts);
+  virtual ~LandmarkFactoryRpgExhaust() {}
+
+ private:
+  void generate_landmarks();
 };
 
 #endif

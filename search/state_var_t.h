@@ -12,5 +12,4 @@ typedef int state_var_t;
 
 #endif
 
-
 #endif

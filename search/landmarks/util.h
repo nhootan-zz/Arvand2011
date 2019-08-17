@@ -1,8 +1,8 @@
 #ifndef LANDMARKS_UTIL_H
 #define LANDMARKS_UTIL_H
 
-#include <vector>
 #include <ext/hash_map>
+#include <vector>
 
 class LandmarkNode;
 class Operator;

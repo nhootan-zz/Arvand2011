@@ -19,24 +19,25 @@
  *
  *********************************************************************/
 
-
 #ifndef PREDECESSOR_GENERATOR_H_
 #define PREDECESSOR_GENERATOR_H_
 
-#include "../state.h"
 #include <vector>
- 
+
+#include "../state.h"
+
 using namespace std;
 
 class Operator;
 
-class PredecessorGenerator
-{
-	vector<vector<vector<const Operator*> > > effect_of;
-public:
-	PredecessorGenerator();
-	void generate_leading_operators(const State &curr, vector<const Operator *> &ops);
-	virtual ~PredecessorGenerator();
+class PredecessorGenerator {
+  vector<vector<vector<const Operator *> > > effect_of;
+
+ public:
+  PredecessorGenerator();
+  void generate_leading_operators(const State &curr,
+                                  vector<const Operator *> &ops);
+  virtual ~PredecessorGenerator();
 };
 
 #endif /*PREDECESSOR_GENERATOR_H_*/

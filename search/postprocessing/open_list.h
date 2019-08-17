@@ -28,38 +28,44 @@
 #ifndef ARAS_OPEN_LIST_H
 #define ARAS_OPEN_LIST_H
 
-#include <vector>
 #include <queue>
+#include <vector>
 
-template<class Entry>
+template <class Entry>
 class ArasOpenList {
-    class IsWorse {
-	public:
-	bool operator() (const pair<pair<int,int>, Entry>& a, const pair<pair<int,int>, Entry>& b) const {
-	    if(a.first.first != b.first.first)
-		return a.first.first > b.first.first;
-	    else
-		return a.first.second > b.first.second;
-	};
+  class IsWorse {
+   public:
+    bool operator()(const pair<pair<int, int>, Entry>& a,
+                    const pair<pair<int, int>, Entry>& b) const {
+      if (a.first.first != b.first.first)
+        return a.first.first > b.first.first;
+      else
+        return a.first.second > b.first.second;
     };
+  };
 
-    priority_queue<pair<pair<int,int>, Entry>, vector<pair<pair<int,int>, Entry> >, 
-	typename ArasOpenList<Entry>::IsWorse > queue;
-public:
-    ArasOpenList();
-    ~ArasOpenList();
+  priority_queue<pair<pair<int, int>, Entry>,
+                 vector<pair<pair<int, int>, Entry> >,
+                 typename ArasOpenList<Entry>::IsWorse>
+      queue;
 
-    size_t memory_usage() {return sizeof(pair<pair<int,int>, Entry>) * queue.size() * 2;}
+ public:
+  ArasOpenList();
+  ~ArasOpenList();
 
-    void insert(pair<int, int> key, const Entry &entry);
-    Entry remove_min();
-    void clear();
+  size_t memory_usage() {
+    return sizeof(pair<pair<int, int>, Entry>) * queue.size() * 2;
+  }
 
-    pair<int, int> min() const;
-    bool empty() const;
-    
-    size_t approx_num_bytes() const;
-    int size() const;
+  void insert(pair<int, int> key, const Entry& entry);
+  Entry remove_min();
+  void clear();
+
+  pair<int, int> min() const;
+  bool empty() const;
+
+  size_t approx_num_bytes() const;
+  int size() const;
 };
 
 #include "open_list.cc"

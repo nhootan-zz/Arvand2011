@@ -1,45 +1,46 @@
 #ifndef OPEN_LISTS_OPEN_LIST_BUCKETS_H
 #define OPEN_LISTS_OPEN_LIST_BUCKETS_H
 
-#include "open_list.h"
-#include "../scalar_evaluator.h"
-
 #include <deque>
 #include <utility>
 #include <vector>
 
+#include "../scalar_evaluator.h"
+#include "open_list.h"
+
 class Options;
 
-template<class Entry>
+template <class Entry>
 class BucketOpenList : public OpenList<Entry> {
-    typedef std::deque<Entry> Bucket;
-    std::vector<Bucket> buckets;
-    mutable int lowest_bucket;
-    int size;
+  typedef std::deque<Entry> Bucket;
+  std::vector<Bucket> buckets;
+  mutable int lowest_bucket;
+  int size;
 
-    ScalarEvaluator *evaluator;
-    int last_evaluated_value;
-    bool last_preferred;
-    bool dead_end;
-    bool dead_end_reliable;
-protected:
-    ScalarEvaluator *get_evaluator() {return evaluator; }
+  ScalarEvaluator *evaluator;
+  int last_evaluated_value;
+  bool last_preferred;
+  bool dead_end;
+  bool dead_end_reliable;
 
-public:
-    BucketOpenList(const Options &opts);
-    ~BucketOpenList();
+ protected:
+  ScalarEvaluator *get_evaluator() { return evaluator; }
 
-    int insert(const Entry &entry);
-    Entry remove_min(std::vector<int> *key = 0);
-    bool empty() const;
-    void clear();
+ public:
+  BucketOpenList(const Options &opts);
+  ~BucketOpenList();
 
-    void evaluate(int g, bool preferred);
-    bool is_dead_end() const;
-    bool dead_end_is_reliable() const;
-    void get_involved_heuristics(std::set<Heuristic *> &hset);
+  int insert(const Entry &entry);
+  Entry remove_min(std::vector<int> *key = 0);
+  bool empty() const;
+  void clear();
 
-    static OpenList<Entry> *_parse(OptionParser &parser);
+  void evaluate(int g, bool preferred);
+  bool is_dead_end() const;
+  bool dead_end_is_reliable() const;
+  void get_involved_heuristics(std::set<Heuristic *> &hset);
+
+  static OpenList<Entry> *_parse(OptionParser &parser);
 };
 
 #include "open_list_buckets.cc"

@@ -20,134 +20,134 @@
  *
  *********************************************************************/
 
-
 #ifndef ARAS_H_
 #define ARAS_H_
 
-#include "../operator.h"
-#include "../state.h"
-#include "../heuristic.h"
-#include "../postprocessor.h"
-#include "../option_parser.h"
-#include "../operator_cost.h"
-#include "neighborhood_graph.h"
-#include "predecessor_generator.h"
-#include <vector>
 #include <map>
 #include <set>
+#include <vector>
+
+#include "../heuristic.h"
+#include "../operator.h"
+#include "../operator_cost.h"
+#include "../option_parser.h"
+#include "../postprocessor.h"
+#include "../state.h"
+#include "neighborhood_graph.h"
+#include "predecessor_generator.h"
 
 // default values for Aras parameters
 static const bool DEFAULT_RG_GRAPH = true;
 static const bool DEFAULT_AE = true;
 static const int DEFAULT_MEM_LIMIT = -1;
-//static const int DEFAULT_MEM_LIMIT = 2000000;
+// static const int DEFAULT_MEM_LIMIT = 2000000;
 static const int DEFAULT_TIME_LIMIT = -1;
 static const int DEFAULT_N_ITER = 1000000;
 static const int DEFAULT_SPN = 1000;
 
-
 using namespace std;
 
-class FullMemory
-{
-    public:
-        size_t memory;
-        FullMemory(size_t memory_) : memory(memory_){}
+class FullMemory {
+ public:
+  size_t memory;
+  FullMemory(size_t memory_) : memory(memory_) {}
 };
 
-class FinishTime
-{
-	public:
-		FinishTime(){}
+class FinishTime {
+ public:
+  FinishTime() {}
 };
 
-class InvalidPlan{
-   public:
-   InvalidPlan(){}
+class InvalidPlan {
+ public:
+  InvalidPlan() {}
 };
 
-struct NodeInfo{
-	const State* parent;
-	const Operator* op;
-	int level;
-	NodeInfo(const State* p, const Operator* o, int l){
-		parent = p;
-		op = o;
-		level = l;
-	}
+struct NodeInfo {
+  const State* parent;
+  const Operator* op;
+  int level;
+  NodeInfo(const State* p, const Operator* o, int l) {
+    parent = p;
+    op = o;
+    level = l;
+  }
 };
 
+class Aras : public Postprocessor {
+  // parameters
+  bool hibernate;
+  string input_plan;
+  bool reg_graph;
+  int num_iterations;
+  bool ae;
+  int step_limit;
+  int steps_per_node;
+  int initial_spn;
+  size_t memory_limit;
+  int time_limit;
+  OperatorCost cost_type;
 
-class Aras : public Postprocessor
-{
-	//parameters
-	bool hibernate;
-	string input_plan;
-	bool reg_graph;
-	int num_iterations;
-	bool ae;
-	int step_limit;
-	int steps_per_node;
-	int initial_spn;
-	size_t memory_limit;
-	int time_limit;
-	OperatorCost cost_type;
+  PredecessorGenerator* predecessor_generator;
+  enum { DONT_CARE = -1 };
+  vector<bool> can_be_removed;
+  vector<int> goal_agenda;
+  vector<State> states;
+  map<State, int> plan_container;
+  int num_removed;
+  set<State> goals;
+  int nodes_in_graph;
+  float avg_parent_ptrs;
+  size_t mem;
+  int time_keeping_counter;
+  Timer* timer;
+  void read_plan(ifstream& in, vector<const Operator*>& plan);
 
-	PredecessorGenerator *predecessor_generator;
-	enum{DONT_CARE = -1};
-	vector<bool> can_be_removed;
-	vector<int> goal_agenda;
-	vector<State> states;
-	map<State, int> plan_container;
-	int num_removed;
-	set<State> goals;
-	int nodes_in_graph;
-	float avg_parent_ptrs;
-	size_t mem;
-	int time_keeping_counter;
-	Timer* timer;
-	void read_plan(ifstream& in, vector<const Operator*>& plan);
+  string strtolower(string str);
+  void trim_space(string& str);
+  void dump_plan(vector<const Operator*>& plan);
+  void update_plan_info(vector<const Operator*>& plan);
+  void iterative_action_elimination(vector<const Operator*>& plan);
+  void action_elimination(State& initial_state, vector<const Operator*>& plan,
+                          int index);
 
-	string strtolower(string str);
-	void trim_space(string& str);
-	void dump_plan(vector<const Operator*>& plan);
-	void update_plan_info(vector<const Operator*>& plan);
-	void iterative_action_elimination(vector<const Operator*>& plan);
-	void action_elimination(State& initial_state,
-							vector<const Operator*>& plan,
-							int index);
+  vector<const Operator*> PNGS(int start, int finish,
+                               NeigborhoodGraph& search_space,
+                               vector<const Operator*>& plan);
 
-	vector<const Operator*> PNGS(int start, int finish, NeigborhoodGraph& search_space, vector<const Operator*>& plan);
-	
-	void progression_expand(NeigborhoodGraph& search_space, Node& initial_node);
-	void regression_expand(NeigborhoodGraph& search_space, Node& initial_node);
-	
-	void build_regression_graph(NeigborhoodGraph& search_space,vector<const Operator*>& plan);
-	void build_progression_graph(int start, int finish, NeigborhoodGraph& search_space,vector<const Operator*>& plan);
-	
-	vector<const Operator*> chain_backward(NeigborhoodGraph& state_space);
-	vector<const Operator*> tsa_star(NeigborhoodGraph& search_space, Node& initial_node, int initial_h_value, int d, int& next_d);
-	
-	int blind_evaluation(State state);
-	int backward_blind_evaluation(State state);
-	void output_memory_usage(NeigborhoodGraph&);
-	bool exceed_time_limit();
-	bool memory_is_full(size_t mem_usage);
-	void reinit();
-	int get_adjusted_cost(const Operator &op) const;
-	//vector<const Operator*> iterative_action_elimination(ifstream& in);
-	vector<const Operator*> PNGS(ifstream& in);
-	vector<const Operator*> iterative_PNGS(vector<const Operator*>& plan);
-	vector<const Operator*> iterative_PNGS(ifstream& in);
-	
-public:
-	void run();
-	void run(vector<const Operator*>& plan);
-	void dump();
+  void progression_expand(NeigborhoodGraph& search_space, Node& initial_node);
+  void regression_expand(NeigborhoodGraph& search_space, Node& initial_node);
 
+  void build_regression_graph(NeigborhoodGraph& search_space,
+                              vector<const Operator*>& plan);
+  void build_progression_graph(int start, int finish,
+                               NeigborhoodGraph& search_space,
+                               vector<const Operator*>& plan);
 
-	Aras(const Options &opts);
-	virtual ~Aras();
+  vector<const Operator*> chain_backward(NeigborhoodGraph& state_space);
+  vector<const Operator*> tsa_star(NeigborhoodGraph& search_space,
+                                   Node& initial_node, int initial_h_value,
+                                   int d, int& next_d);
+
+  int blind_evaluation(State state);
+  int backward_blind_evaluation(State state);
+  void output_memory_usage(NeigborhoodGraph&);
+  bool exceed_time_limit();
+  bool memory_is_full(size_t mem_usage);
+  void reinit();
+  int get_adjusted_cost(const Operator& op) const;
+  // vector<const Operator*> iterative_action_elimination(ifstream& in);
+  vector<const Operator*> PNGS(ifstream& in);
+  vector<const Operator*> iterative_PNGS(vector<const Operator*>& plan);
+  vector<const Operator*> iterative_PNGS(ifstream& in);
+
+ public:
+  void run();
+  void run(vector<const Operator*>& plan);
+  void dump();
+
+  Aras(const Options& opts);
+  virtual ~Aras();
 };
 
 #endif /*ARAS_H_*/

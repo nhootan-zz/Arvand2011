@@ -4,13 +4,15 @@
 #include "heuristic.h"
 
 class BlindSearchHeuristic : public Heuristic {
-    int min_operator_cost;
-protected:
-    virtual void initialize();
-    virtual int compute_heuristic(const State &state);
-public:
-    BlindSearchHeuristic(const Options &options);
-    ~BlindSearchHeuristic();
+  int min_operator_cost;
+
+ protected:
+  virtual void initialize();
+  virtual int compute_heuristic(const State &state);
+
+ public:
+  BlindSearchHeuristic(const Options &options);
+  ~BlindSearchHeuristic();
 };
 
 #endif

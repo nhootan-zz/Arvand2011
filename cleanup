@@ -10,6 +10,7 @@ rm -R -f search/.obj
 rm -f translate/*.pyc
 rm -f translate/pddl/*.pyc
 rm -f search/downward*
+rm -f search/Makefile.*
 
 NUM=1
 while [[ -e sas_plan.$NUM ]]; do

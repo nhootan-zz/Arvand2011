@@ -4,12 +4,13 @@
 #include "heuristic.h"
 
 class GoalCountHeuristic : public Heuristic {
-protected:
-    virtual void initialize();
-    virtual int compute_heuristic(const State &state);
-public:
-    GoalCountHeuristic(const Options &options);
-    ~GoalCountHeuristic();
+ protected:
+  virtual void initialize();
+  virtual int compute_heuristic(const State &state);
+
+ public:
+  GoalCountHeuristic(const Options &options);
+  ~GoalCountHeuristic();
 };
 
 #endif

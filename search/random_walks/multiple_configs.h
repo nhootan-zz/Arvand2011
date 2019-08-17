@@ -21,28 +21,28 @@
  *
  *********************************************************************/
 
-
 #ifndef MULTIPLE_CONFIGS_H
 #define MULTIPLE_CONFIGS_H
 
-#include "../search_engine.h"
 #include "../globals.h"
 #include "../option_parser.h"
+#include "../search_engine.h"
 #include "mrw.h"
 
 class Options;
 
 class MultipleConfigsSearch : public SearchEngine {
-    const vector<ParseTree> engine_configs;
-    vector<MRW*> engines;
-    SearchEngine *get_search_engine(int engine_config_start_index);
-    virtual void initialize();
-    virtual int step();
-public:
-    MultipleConfigsSearch(const Options &opts);
-    virtual void set_bound(int b);
-    virtual ~MultipleConfigsSearch();
-    void statistics() const;
+  const vector<ParseTree> engine_configs;
+  vector<MRW *> engines;
+  SearchEngine *get_search_engine(int engine_config_start_index);
+  virtual void initialize();
+  virtual int step();
+
+ public:
+  MultipleConfigsSearch(const Options &opts);
+  virtual void set_bound(int b);
+  virtual ~MultipleConfigsSearch();
+  void statistics() const;
 };
 
 #endif

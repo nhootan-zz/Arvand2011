@@ -39,52 +39,53 @@ using namespace std;
   Priority_queue based implementation of an open list.
 */
 
-template<class Entry>
-ArasOpenList<Entry>::ArasOpenList() {
+template <class Entry>
+ArasOpenList<Entry>::ArasOpenList() {}
+
+template <class Entry>
+ArasOpenList<Entry>::~ArasOpenList() {}
+
+template <class Entry>
+inline void ArasOpenList<Entry>::insert(pair<int, int> key,
+                                        const Entry &entry) {
+  queue.push(make_pair(key, entry));
 }
 
-template<class Entry>
-ArasOpenList<Entry>::~ArasOpenList() {
-}
-
-template<class Entry>
-inline void ArasOpenList<Entry>::insert(pair<int, int> key, const Entry &entry) {
-    queue.push(make_pair(key, entry));
-}
-
-template<class Entry>
+template <class Entry>
 inline pair<int, int> ArasOpenList<Entry>::min() const {
-    return (queue.top()).first;
+  return (queue.top()).first;
 }
 
-template<class Entry>
+template <class Entry>
 inline Entry ArasOpenList<Entry>::remove_min() {
-    Entry best = queue.top().second;
-    queue.pop();
-    return best;
+  Entry best = queue.top().second;
+  queue.pop();
+  return best;
 }
 
-template<class Entry>
+template <class Entry>
 inline bool ArasOpenList<Entry>::empty() const {
-    return queue.empty();
+  return queue.empty();
 }
 
-template<class Entry>
+template <class Entry>
 inline void ArasOpenList<Entry>::clear() {
-    queue = priority_queue<pair<pair<int, int>, Entry>, vector<pair<pair<int, int>, Entry> >,
-	typename ArasOpenList<Entry>::IsWorse >();
+  queue = priority_queue<pair<pair<int, int>, Entry>,
+                         vector<pair<pair<int, int>, Entry> >,
+                         typename ArasOpenList<Entry>::IsWorse>();
 }
 
-template<class Entry>
+template <class Entry>
 size_t ArasOpenList<Entry>::approx_num_bytes() const {
-    size_t value = sizeof(queue) +
-                   OL_LOAD_FACTOR*queue.size()*(OL_ENTRY_OVERHEAD + sizeof(pair<pair<int, int>, Entry>));
-    return value;
+  size_t value = sizeof(queue) +
+                 OL_LOAD_FACTOR * queue.size() *
+                     (OL_ENTRY_OVERHEAD + sizeof(pair<pair<int, int>, Entry>));
+  return value;
 }
 
-template<class Entry>
+template <class Entry>
 int ArasOpenList<Entry>::size() const {
-    return queue.size();
+  return queue.size();
 }
 
 #endif

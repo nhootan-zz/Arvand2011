@@ -1,42 +1,28 @@
-# -*- coding: utf-8 -*-
+#- * - coding : utf - 8 - * -
 
-import glob
-import optparse
-import os
-import os.path
-import resource
-import sys
+import glob import optparse import os import os.path import resource import sys
 
+    DEFAULT_TIMEOUT = 1800
+#Measurements show that this process uses about 35 MB of virtual memory.
+    BYTES_FOR_PYTHON = 50 * 1024 * 1024
 
-DEFAULT_TIMEOUT = 1800
-# Measurements show that this process uses about 35 MB of virtual memory.
-BYTES_FOR_PYTHON = 50 * 1024 * 1024
+    def parse_args() : parser = optparse.OptionParser() parser.add_option("--plan-file", default = "sas_plan", help = "Filename for the found plans (default: %default)") return parser.parse_args()
 
-def parse_args():
-    parser = optparse.OptionParser()
-    parser.add_option("--plan-file", default="sas_plan",
-                      help="Filename for the found plans (default: %default)")
-    return parser.parse_args()
+                                                                                                                   def safe_unlink(filename) : try : os
+  .unlink(filename) except EnvironmentError : pass
 
-def safe_unlink(filename):
-    try:
-        os.unlink(filename)
-    except EnvironmentError:
-        pass
+                                              def set_limit(kind, amount)
+      : try : resource
+    .setrlimit(kind, (amount, amount)) except(OSError, ValueError), err :
+#This can happen if the limit has already been set externally.
+        sys.stderr.write(
+            "Limit for %s could not be set to %s (%s). "
+            "Previous limit: %s\n" %
+            (kind, amount, err, resource.getrlimit(kind)))
 
-def set_limit(kind, amount):
-    try:
-        resource.setrlimit(kind, (amount, amount))
-    except (OSError, ValueError), err:
-        # This can happen if the limit has already been set externally.
-        sys.stderr.write("Limit for %s could not be set to %s (%s). "
-                         "Previous limit: %s\n" %
-                         (kind, amount, err, resource.getrlimit(kind)))
-
-def adapt_search(args, search_cost_type, heuristic_cost_type, plan_file):
-    g_bound = "infinity"
-    plan_no = 0
-    try:
+            def
+        adapt_search(args, search_cost_type, heuristic_cost_type, plan_file)
+        : g_bound = "infinity" plan_no = 0 try:
         for line in open("plan_numbers_and_cost"):
             plan_no += 1
             g_bound = int(line.split()[1])
@@ -79,7 +65,7 @@ def run_search(planner, args, plan_file, timeout=None, memory=None):
         if timeout:
             set_limit(resource.RLIMIT_CPU, int(timeout))
         if memory:
-            # Memory in Bytes
+#Memory in Bytes
             set_limit(resource.RLIMIT_AS, int(memory))
         os.execl(planner, *complete_args)
     os.wait()
@@ -100,7 +86,7 @@ def run(configs, optimal=True, final_config=None, final_config_builder=None,
     options, extra_args = parse_args()
     plan_file = options.plan_file
 
-    # Time limits are either positive values in seconds or -1 (unlimited).
+#Time limits are either positive values in seconds or -1(unlimited).
     soft_time_limit, hard_time_limit = resource.getrlimit(resource.RLIMIT_CPU)
     print 'External time limit:', hard_time_limit
     if (hard_time_limit >= 0 and timeout is not None and
@@ -108,7 +94,7 @@ def run(configs, optimal=True, final_config=None, final_config_builder=None,
         sys.stderr.write("The externally set timeout (%d) differs from the one "
                          "in the portfolio file (%d). Is this expected?\n" %
                          (hard_time_limit, timeout))
-    # Prefer limits in the order: externally set, from portfolio file, default.
+#Prefer limits in the order : externally set, from portfolio file, default.
     if hard_time_limit >= 0:
         timeout = hard_time_limit
     elif timeout is None:
@@ -117,11 +103,11 @@ def run(configs, optimal=True, final_config=None, final_config_builder=None,
         timeout = DEFAULT_TIMEOUT
     print 'Internal time limit:', timeout
 
-    # Memory limits are either positive values in Bytes or -1 (unlimited).
+#Memory limits are either positive values in Bytes or -1(unlimited).
     soft_mem_limit, hard_mem_limit = resource.getrlimit(resource.RLIMIT_AS)
     print 'External memory limit:', hard_mem_limit
     memory = hard_mem_limit - BYTES_FOR_PYTHON
-    # Do not limit memory if the previous limit was very low or unlimited.
+#Do not limit memory if the previous limit was very low or unlimited.
     if memory < 0:
         memory = None
     print 'Internal memory limit:', memory
@@ -168,13 +154,13 @@ def run_sat(configs, unitcost, planner, plan_file, final_config,
             run_search(planner, args, curr_plan_file, run_timeout, memory)
 
             if os.path.exists(curr_plan_file):
-                # found a plan in last run
+#found a plan in last run
                 if not changed_cost_types and unitcost != "unit":
-                    # switch to real cost and repeat last run
+#switch to real cost and repeat last run
                     changed_cost_types = True
                     search_cost_type = 0
                     heuristic_cost_type = 2
-                    # TODO: refactor: thou shalt not copy code!
+#TODO : refactor : thou shalt not copy code !
                     args = list(configs[pos][1])
                     curr_plan_file = adapt_search(args, search_cost_type,
                                                 heuristic_cost_type, plan_file)
@@ -183,7 +169,7 @@ def run_sat(configs, unitcost, planner, plan_file, final_config,
                     run_search(planner, args, curr_plan_file, run_timeout,
                                memory)
                 if final_config_builder:
-                    # abort scheduled portfolio and start final config
+#abort scheduled portfolio and start final config
                     args = list(configs[pos][1])
                     final_config = final_config_builder(args)
                     break
@@ -191,7 +177,7 @@ def run_sat(configs, unitcost, planner, plan_file, final_config,
         if final_config:
             break
 
-    # run final config without time limit
+#run final config without time limit
     final_config = list(final_config)
     curr_plan_file = adapt_search(final_config, search_cost_type,
                                   heuristic_cost_type, plan_file)
@@ -200,7 +186,7 @@ def run_sat(configs, unitcost, planner, plan_file, final_config,
 def run_opt(configs, planner, plan_file, remaining_time_at_start, memory):
     for pos, (relative_time, args) in enumerate(configs):
         if pos == len(configs) - 1:
-            # Do not add timeout for last config.
+#Do not add timeout for last config.
             timeout = None
         else:
             timeout = determine_timeout(remaining_time_at_start, configs, pos)

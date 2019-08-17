@@ -7,42 +7,41 @@ class State;
 class ValueTransitionLabel;
 
 class CGCache {
-    std::vector<std::vector<int> > cache;
-    std::vector<std::vector<ValueTransitionLabel *> > helpful_transition_cache;
-    std::vector<std::vector<int> > depends_on;
+  std::vector<std::vector<int> > cache;
+  std::vector<std::vector<ValueTransitionLabel *> > helpful_transition_cache;
+  std::vector<std::vector<int> > depends_on;
 
-    int get_index(int var, const State &state, int from_val, int to_val) const;
-public:
-    static const int NOT_COMPUTED = -2;
+  int get_index(int var, const State &state, int from_val, int to_val) const;
 
-    CGCache();
-    ~CGCache();
+ public:
+  static const int NOT_COMPUTED = -2;
 
-    bool is_cached(int var) const {
-        return !cache[var].empty();
-    }
+  CGCache();
+  ~CGCache();
 
-    int lookup(int var, const State &state, int from_val, int to_val) const {
-        return cache[var][get_index(var, state, from_val, to_val)];
-    }
+  bool is_cached(int var) const { return !cache[var].empty(); }
 
-    void store(int var, const State &state,
-               int from_val, int to_val, int cost) {
-        cache[var][get_index(var, state, from_val, to_val)] = cost;
-    }
+  int lookup(int var, const State &state, int from_val, int to_val) const {
+    return cache[var][get_index(var, state, from_val, to_val)];
+  }
 
-    ValueTransitionLabel *lookup_helpful_transition(
-        int var, const State &state, int from_val, int to_val) const {
-        int index = get_index(var, state, from_val, to_val);
-        return helpful_transition_cache[var][index];
-    }
+  void store(int var, const State &state, int from_val, int to_val, int cost) {
+    cache[var][get_index(var, state, from_val, to_val)] = cost;
+  }
 
-    void store_helpful_transition(
-        int var, const State &state, int from_val, int to_val,
-        ValueTransitionLabel *helpful_transition) {
-        int index = get_index(var, state, from_val, to_val);
-        helpful_transition_cache[var][index] = helpful_transition;
-    }
+  ValueTransitionLabel *lookup_helpful_transition(int var, const State &state,
+                                                  int from_val,
+                                                  int to_val) const {
+    int index = get_index(var, state, from_val, to_val);
+    return helpful_transition_cache[var][index];
+  }
+
+  void store_helpful_transition(int var, const State &state, int from_val,
+                                int to_val,
+                                ValueTransitionLabel *helpful_transition) {
+    int index = get_index(var, state, from_val, to_val);
+    helpful_transition_cache[var][index] = helpful_transition;
+  }
 };
 
 #endif
