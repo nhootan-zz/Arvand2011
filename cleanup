@@ -1,0 +1,18 @@
+#! /bin/bash
+rm -f downward.tmp.*
+rm -f output.sas
+rm -f output
+rm -f elapsed.time
+rm -f plan_numbers_and_cost
+rm -f sas_plan
+rm -R -f preprocess/.obj
+rm -R -f search/.obj
+rm -f translate/*.pyc
+rm -f translate/pddl/*.pyc
+rm -f search/downward*
+
+NUM=1
+while [[ -e sas_plan.$NUM ]]; do
+    rm -f sas_plan.$NUM
+    NUM=$((NUM + 1))
+done
