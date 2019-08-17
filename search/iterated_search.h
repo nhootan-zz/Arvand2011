@@ -23,10 +23,7 @@ class IteratedSearch : public SearchEngine {
   bool repeat_last_phase;
   bool continue_on_fail;
   bool continue_on_solve;
-  // Added by Hootan
-  // Begin:
   bool postprocessing;
-  // End:
   SearchEngine *get_search_engine(int engine_config_start_index);
   SearchEngine *create_phase(int p);
   int step_return_value();

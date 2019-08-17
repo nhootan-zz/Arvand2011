@@ -11,7 +11,6 @@ class Operator;
 
 class State {
   state_var_t *vars;  // values for vars
-  // added by hootan
   static std::vector<std::pair<int, int> > effects;
   bool borrowed_buffer;
   void _allocate();
@@ -19,11 +18,8 @@ class State {
   void _copy_buffer_from_state(const State &state);
 
  public:
-  // Added by Hootan
-  // begin
   void update(const Operator &op);
   State(const Operator &op, const State &successor);
-  // end
 
   void dump() const;
 

@@ -6,8 +6,6 @@
 #include "plugin.h"
 #include "postprocessor.h"
 
-// Modified by Hootan
-// Begin:
 IteratedSearch::IteratedSearch(const Options &opts)
     : SearchEngine(opts),
       engine_configs(opts.get_list<ParseTree>("engine_configs")),
@@ -21,14 +19,11 @@ IteratedSearch::IteratedSearch(const Options &opts)
   iterated_found_solution = false;
   plan_counter = opts.get<int>("plan_counter");
 }
-// End
 
 IteratedSearch::~IteratedSearch() {}
 
 void IteratedSearch::initialize() {
   phase = 0;
-  // Added by Hootan:
-  // Begin
   if (postprocessing) {
     if (g_postprocessor == 0) {
       cerr << "No postprocessor is available" << endl;
@@ -37,7 +32,6 @@ void IteratedSearch::initialize() {
       cout << "Iterated search uses the postprocessor ..." << endl;
     }
   }
-  // End
 }
 
 SearchEngine *IteratedSearch::get_search_engine(int engine_configs_index) {
@@ -60,15 +54,12 @@ SearchEngine *IteratedSearch::create_phase(int p) {
        we might not actually have right now, but strive for). So
        this overrides continue_on_fail.
     */
-    // Modified by Hootan:
-    // Begin
     if (repeat_last_phase && last_phase_found_solution) {
       return current_search;
       // return get_search_engine(engine_configs.size() - 1);
     } else {
       return NULL;
     }
-    // End
   }
 
   return get_search_engine(p);
@@ -99,14 +90,11 @@ int IteratedSearch::step() {
       best_bound = plan_cost;
       set_plan(found_plan);
     }
-    // Added by Hootan
-    // Begin
     if (postprocessing) {
       // TODO: Note that currently aras does not affect the best_bound
       // this should be added as an option in later versions.
       g_postprocessor->run(found_plan);
     }
-    // End
   }
   current_search->statistics();
   search_progress.inc_expanded(
@@ -168,11 +156,8 @@ static SearchEngine *_parse(OptionParser &parser) {
                           "continue search after solution found");
   parser.add_option<int>("plan_counter", 0,
                          "start enumerating plans with this number");
-  // Added by Hootan
-  // Begin
   parser.add_option<bool>("postprocessing", false,
                           "use postprocessor after each iteration");
-  // End
   SearchEngine::add_options_to_parser(parser);
   Options opts = parser.parse();
 

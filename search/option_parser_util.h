@@ -16,12 +16,9 @@ class ScalarEvaluator;
 class Synergy;
 class SearchEngine;
 class OptionParser;
-// added by Hootan
-// begin
 class Simulator;
 class Analyzer;
 class Postprocessor;
-// end
 template <class Entry>
 class OpenList;
 
@@ -177,8 +174,6 @@ struct TypeNamer<ScalarEvaluator *> {
   static std::string name() { return "scalar evaluator"; }
 };
 
-// Hootan_edit
-// begin
 template <>
 struct TypeNamer<Simulator *> {
   static std::string name() { return "simulator"; }
@@ -194,7 +189,6 @@ struct TypeNamer<Postprocessor *> {
   static std::string name() { return "postprocessor"; }
 };
 
-// end
 
 template <>
 struct TypeNamer<SearchEngine *> {

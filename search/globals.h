@@ -16,12 +16,9 @@ class State;
 class SuccessorGenerator;
 class Timer;
 class RandomNumberGenerator;
-// Added by Hootan
-// Begin
 class Simulator;
 class Analyzer;
 class Postprocessor;
-// End
 
 bool test_goal(const State &state);
 void save_plan(const std::vector<const Operator *> &plan, int iter);
@@ -37,15 +34,12 @@ void check_magic(std::istream &in, std::string magic);
 
 bool are_mutex(const std::pair<int, int> &a, const std::pair<int, int> &b);
 
-// Added by Hootan
-// Begin
 extern Simulator *g_simulator;
 extern Analyzer *g_analyzer;
 extern Postprocessor *g_postprocessor;
 extern std::string g_input_plan_filename;
 extern int g_seed;
 extern int g_state_id;
-// End
 extern bool g_use_metric;
 extern int g_min_action_cost;
 extern int g_max_action_cost;

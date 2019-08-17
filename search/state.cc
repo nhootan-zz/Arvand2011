@@ -10,12 +10,10 @@
 #include "utilities.h"
 using namespace std;
 
-// Added by Hootan
-// begin
 void State::update(const Operator &op) {
   assert(!op.is_axiom());
   effects.clear();
-  // TODO: Hootan: find the maximum pre_post.size() and allocate the memory
+  // TODO: find the maximum pre_post.size() and allocate the memory
   // once.
   if (effects.capacity() < op.get_pre_post().size()) {
     effects.reserve(op.get_pre_post().size());
@@ -46,7 +44,6 @@ State::State(const Operator &op, const State &successor) {
 
   g_axiom_evaluator->evaluate(*this);
 }
-// end
 
 void State::_allocate() {
   borrowed_buffer = false;
@@ -88,8 +85,6 @@ State::State(const State &state) {
   _allocate();
   _copy_buffer_from_state(state);
 }
-// Edited by Hootan
-// begin
 
 State::State(const State &predecessor, const Operator &op) {
   assert(!op.is_axiom());
@@ -97,23 +92,8 @@ State::State(const State &predecessor, const Operator &op) {
   _copy_buffer_from_state(predecessor);
   // Update values affected by operator.
   update(op);
-  // dump();
 }
 
-/*State::State(const State &predecessor, const Operator &op) {
-    assert(!op.is_axiom());
-    _allocate();
-    _copy_buffer_from_state(predecessor);
-    // Update values affected by operator.
-    for (int i = 0; i < op.get_pre_post().size(); i++) {
-        const PrePost &pre_post = op.get_pre_post()[i];
-        if (pre_post.does_fire(predecessor))
-            vars[pre_post.var] = pre_post.post;
-    }
-
-    g_axiom_evaluator->evaluate(*this);
-}*/
-// end
 State::~State() { _deallocate(); }
 
 void State::dump() const {
@@ -139,5 +119,4 @@ size_t State::hash() const {
   return ::hash_number_sequence(vars, g_variable_domain.size());
 }
 
-// added by hootan
 std::vector<std::pair<int, int> > State::effects;

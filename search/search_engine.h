@@ -25,10 +25,7 @@ class SearchEngine {
   SearchProgress search_progress;
   int bound;
   OperatorCost cost_type;
-  // Modified by Hootan
-  // begin
   enum { FAILED, SOLVED, IN_PROGRESS, RESTART };
-  // end
   virtual void initialize() {}
   virtual int step() = 0;
 

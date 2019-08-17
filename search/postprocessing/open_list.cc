@@ -22,9 +22,7 @@
  * Modified by: Hootan Nakhost
  * (C) Copyright 2013 Hootan Nakhost
  * The file is modified to be used inside Aras.
- *
- *
- *********************************************************************/
+ * *********************************************************************/
 
 // #include "open_list.h"
 

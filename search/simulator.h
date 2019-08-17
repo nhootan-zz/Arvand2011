@@ -1,8 +1,5 @@
 /*
  * simulator.h
- *
- *  Created on: Aug 16, 2012
- *      Author: hootan
  */
 
 #ifndef SIMULATOR_H_

@@ -45,12 +45,9 @@ template <class Entry>
 class OpenList;
 class SearchEngine;
 class ShrinkStrategy;
-// Added by Hootan
-// Begin
 class Simulator;
 class Analyzer;
 class Postprocessor;
-// End
 /*
 The TokenParser<T> wraps functions to parse supported types T.
  */
@@ -94,8 +91,6 @@ class TokenParser<ScalarEvaluator *> {
   static inline ScalarEvaluator *parse(OptionParser &p);
 };
 
-// Added by Hootan
-// begin
 template <>
 class TokenParser<Simulator *> {
  public:
@@ -113,8 +108,6 @@ class TokenParser<Analyzer *> {
  public:
   static inline Analyzer *parse(OptionParser &p);
 };
-
-// end
 
 template <>
 class TokenParser<SearchEngine *> {
@@ -369,9 +362,6 @@ ScalarEvaluator *TokenParser<ScalarEvaluator *>::parse(OptionParser &p) {
   return 0;
 }
 
-// Added by Hootan
-// Begin
-
 Simulator *TokenParser<Simulator *>::parse(OptionParser &p) {
   ParseTree::iterator pt = p.get_parse_tree()->begin();
   if (Registry<Simulator *>::instance()->contains(pt->value)) {
@@ -399,7 +389,6 @@ Analyzer *TokenParser<Analyzer *>::parse(OptionParser &p) {
   return 0;
 }
 
-// end
 SearchEngine *TokenParser<SearchEngine *>::parse(OptionParser &p) {
   ParseTree::iterator pt = p.get_parse_tree()->begin();
   if (Registry<SearchEngine *>::instance()->contains(pt->value)) {

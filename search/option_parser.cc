@@ -49,12 +49,9 @@ static void get_help_templ(const ParseTree &pt) {
 static void get_help(string k) {
   ParseTree pt;
   pt.insert(pt.begin(), ParseNode(k));
-  // Added by Hootan
-  // begin
   get_help_templ<Simulator *>(pt);
   get_help_templ<Analyzer *>(pt);
   get_help_templ<Postprocessor *>(pt);
-  // end
   get_help_templ<SearchEngine *>(pt);
   get_help_templ<Heuristic *>(pt);
   get_help_templ<ScalarEvaluator *>(pt);
@@ -77,12 +74,9 @@ static void get_full_help_templ() {
 }
 
 static void get_full_help() {
-  // Added by Hootan
-  // begin
   get_full_help_templ<Simulator *>();
   get_full_help_templ<Analyzer *>();
   get_full_help_templ<Postprocessor *>();
-  // end
   get_full_help_templ<SearchEngine *>();
   get_full_help_templ<Heuristic *>();
   get_full_help_templ<ScalarEvaluator *>();
@@ -185,8 +179,6 @@ SearchEngine *OptionParser::parse_cmd_line(int argc, const char **argv,
       OptionParser p(argv[i], dry_run);
       engine = p.start_parsing<SearchEngine *>();
     }
-    // Added by Hootan
-    // Begin
     else if (arg.compare("--simulator") == 0) {
       ++i;
       OptionParser p(argv[i], dry_run);
@@ -200,7 +192,6 @@ SearchEngine *OptionParser::parse_cmd_line(int argc, const char **argv,
       OptionParser p(argv[i], dry_run);
       g_postprocessor = p.start_parsing<Postprocessor *>();
     }
-    // End
     else if (arg.compare("--random-seed") == 0) {
       ++i;
       srand(atoi(argv[i]));
@@ -241,8 +232,6 @@ string OptionParser::usage(string progname) {
       "--help [NAME]\n"
       "    Prints help for all heuristics, openlists, etc. called NAME.\n"
       "    Without parameter: prints help for everything available\n"
-      // Added by Hootan
-      // Begin
       "--simulator SIMULATOR\n"
       "    configuration of the simulator. OUTPUT is not needed.\n"
 
@@ -251,8 +240,6 @@ string OptionParser::usage(string progname) {
 
       "--postprocessor POSTPROCESSOR\n"
       "    configuration of the postprocessor.\n"
-
-      // End
       "--landmarks LANDMARKS_PREDEFINITION\n"
       "    Predefines a set of landmarks that can afterwards be referenced\n"
       "    by the name that is specified in the definition.\n"

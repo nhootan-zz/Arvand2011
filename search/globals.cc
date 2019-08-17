@@ -22,7 +22,6 @@ using namespace __gnu_cxx;
 #include "state.h"
 #include "successor_generator.h"
 #include "timer.h"
-// Added by Hootan
 #include "simulator.h"
 
 static const int PRE_FILE_VERSION = 3;
@@ -55,8 +54,6 @@ int calculate_plan_cost(const vector<const Operator *> &plan) {
   return plan_cost;
 }
 
-// Modified by Hootan
-// Begin
 void save_plan(const vector<const Operator *> &plan) {
   // TODO: Refactor: this is only used by the SearchEngine classes
   //       and hence should maybe be moved into the SearchEngine.
@@ -89,7 +86,6 @@ void save_plan(const vector<const Operator *> &plan) {
   }
 }
 
-// End
 void save_plan(const vector<const Operator *> &plan, int iter) {
   // TODO: Refactor: this is only used by the SearchEngine classes
   //       and hence should maybe be moved into the SearchEngine.
@@ -342,8 +338,6 @@ bool are_mutex(const pair<int, int> &a, const pair<int, int> &b) {
   return bool(g_inconsistent_facts[a.first][a.second].count(b));
 }
 
-// Added by Hootan
-// Begin
 Simulator *g_simulator = 0;
 Analyzer *g_analyzer = 0;
 Postprocessor *g_postprocessor = 0;
@@ -351,7 +345,6 @@ string g_input_plan_filename = "";
 
 int g_seed = time(NULL);
 int g_state_id = 0;
-// End
 bool g_use_metric;
 int g_min_action_cost = numeric_limits<int>::max();
 int g_max_action_cost = 0;
@@ -371,5 +364,4 @@ CausalGraph *g_causal_graph;
 
 Timer g_timer;
 string g_plan_filename = "sas_plan";
-// Edited by Hootan
 RandomNumberGenerator g_rng(g_seed);  // Use an arbitrary default seed.

@@ -1,8 +1,5 @@
 /*
  * postprocessor.h
- *
- *  Created on: Feb 13, 2013
- *      Author: hootan
  */
 
 #ifndef POSTPROCESSOR_H_

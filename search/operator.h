@@ -59,23 +59,18 @@ class Operator {
   std::vector<Prevail> prevail;   // var, val
   std::vector<PrePost> pre_post;  // var, old-val, new-val, effect conditions
   mutable bool marked;  // Used for short-term marking of preferred operators
-  // Edited by Hootan
  protected:
   std::string name;
   int cost;
 
  public:
   Operator(std::istream &in, bool is_axiom);
-  // Added by Hootan
-  // begin
-  // TODO:Hootan
   // HACK! This is added to be used by ArtificialOperator.
   // The right way to do this is to introduce an abstract class
   // with name Operator and make the current Operator (of course with other
   // name. e.g., RealOperator) and ArtificialOperator inherent from the abstract
   // class.
   Operator() { is_an_axiom = false; }
-  // end
   virtual void dump() const;
   virtual ~Operator() {}
   std::string get_name() const { return name; }
@@ -92,7 +87,6 @@ class Operator {
       if (!pre_post[i].is_applicable(state)) return false;
     return true;
   }
-  // Begin Hootan
   virtual void get_effects(const State &state,
                            std::vector<std::pair<int, int> > &effects) const;
   int get_op_index() const {
@@ -107,7 +101,6 @@ class Operator {
     }
     return op_index;
   }
-  // END Hootan
   bool is_marked() const { return marked; }
   void mark() const { marked = true; }
   void unmark() const { marked = false; }

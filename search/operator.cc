@@ -75,7 +75,6 @@ void Operator::dump() const {
   cout << endl;
 }
 
-// Added by Hootan
 void Operator::get_effects(const State &state,
                            std::vector<std::pair<int, int> > &effects) const {
   effects.reserve(pre_post.size());

@@ -20,8 +20,6 @@ int main(int argc, const char **argv) {
     exit(1);
   }
 
-  // Edited by Hootan
-  // Begin
   bool run_simulator = false;
   for (int i = 1; i < argc; i++) {
     if (string(argv[i]).compare("--simulator") == 0) {
@@ -32,7 +30,6 @@ int main(int argc, const char **argv) {
 
   if (string(argv[1]).compare("--help") != 0 && !run_simulator)
     read_everything(cin);
-  // END
   SearchEngine *engine = 0;
 
   // the input will be parsed twice:
@@ -46,8 +43,6 @@ int main(int argc, const char **argv) {
     exit(1);
   }
 
-  // Added by Hootan
-  // begin
   cout << "random seed " << g_seed << endl;
   if (g_postprocessor != 0 && g_input_plan_filename != "") {
     g_postprocessor->run();
@@ -73,7 +68,6 @@ int main(int argc, const char **argv) {
     cerr << "Error: no search engine is given." << endl;
     return 1;
   }
-  // end
 
   Timer search_timer;
   engine->search();

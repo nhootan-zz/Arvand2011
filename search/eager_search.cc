@@ -330,9 +330,6 @@ static SearchEngine *_parse(OptionParser &parser) {
   return engine;
 }
 
-// Added by Hootan
-// Begin
-
 static SearchEngine *_parse_weighted_astar(OptionParser &parser) {
   parser.add_option<ScalarEvaluator *>("eval");
   parser.add_option<bool>("pathmax", false, "use pathmax correction");
@@ -372,7 +369,6 @@ static SearchEngine *_parse_weighted_astar(OptionParser &parser) {
 
   return engine;
 }
-// End
 
 static SearchEngine *_parse_astar(OptionParser &parser) {
   parser.add_option<ScalarEvaluator *>("eval");

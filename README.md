@@ -61,7 +61,8 @@ Please control the memory and time limits (ulimit) from outside the program.
 
 Email (in domain gmail.com): nhootan
 
-References
+## References
 
-H. Nakhost. Random Walk Planning: Theory, Practice, and Application. PhD thesis, University of Alberta, 2013. Dissertation Award for best PhD thesis from the Canadian Artificial Intelligence Association.
-
+1- Hootan Nakhost. Random Walk Planning: Theory, Practice, and Application. PhD thesis, University of Alberta, 2013.
+2- Hootan Nakhost, and Martin Mu ̈ller. Towards a second generation random walk planner: an experimental exploration. Proceedings of the 23rd International Joint Conference on Artificial Intelligence (IJCAI'13), 2013.
+3- Hootan Nakhost and Martin Mu ̈ller, Monte-Carlo Exploration for Deterministic Planning. Proceedings of the International Joint Conference on Artificial Intelligence (IJCAI’09), 2009.
