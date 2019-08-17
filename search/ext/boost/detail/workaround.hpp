@@ -3,7 +3,7 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 #ifndef WORKAROUND_DWA2002126_HPP
-# define WORKAROUND_DWA2002126_HPP
+#define WORKAROUND_DWA2002126_HPP
 
 // Compiler/library version workaround macro
 //
@@ -20,8 +20,8 @@
 //
 //     (BOOST_MSVC) != 0 && (BOOST_MSVC) < 1300
 //
-// When used for workarounds that apply to the latest known version 
-// and all earlier versions of a compiler, the following convention 
+// When used for workarounds that apply to the latest known version
+// and all earlier versions of a compiler, the following convention
 // should be observed:
 //
 //     #if BOOST_WORKAROUND(BOOST_MSVC, BOOST_TESTED_AT(1301))
@@ -36,7 +36,7 @@
 // to BOOST_TESTED_AT().  This can be used to locate workarounds which
 // may be obsoleted by newer versions.
 
-# ifndef BOOST_STRICT_CONFIG
+#ifndef BOOST_STRICT_CONFIG
 
 #include <boost/config.hpp>
 
@@ -230,9 +230,9 @@
 // Always define to zero, if it's used it'll be defined my MPL:
 #define BOOST_MPL_CFG_GCC_WORKAROUND_GUARD 0
 
-#  define BOOST_WORKAROUND(symbol, test)                \
-         ((symbol ## _WORKAROUND_GUARD + 0 == 0) &&     \
-         (symbol != 0) && (1 % (( (symbol test) ) + 1)))
+#define BOOST_WORKAROUND(symbol, test)                      \
+  ((symbol##_WORKAROUND_GUARD + 0 == 0) && (symbol != 0) && \
+   (1 % (((symbol test)) + 1)))
 //                              ^ ^           ^ ^
 // The extra level of parenthesis nesting above, along with the
 // BOOST_OPEN_PAREN indirection below, is required to satisfy the
@@ -248,20 +248,21 @@
 //
 //      symbol test              =>   if (symbol <= x) then 1 else -1
 //      (symbol test) + 1        =>   if (symbol <= x) then 2 else 0
-//      1 % ((symbol test) + 1)  =>   if (symbol <= x) then 1 else divide-by-zero
+//      1 % ((symbol test) + 1)  =>   if (symbol <= x) then 1 else
+//      divide-by-zero
 //
 
-#  ifdef BOOST_DETECT_OUTDATED_WORKAROUNDS
-#   define BOOST_OPEN_PAREN (
-#   define BOOST_TESTED_AT(value)  > value) ?(-1): BOOST_OPEN_PAREN 1
-#  else
-#   define BOOST_TESTED_AT(value) != ((value)-(value))
-#  endif
+#ifdef BOOST_DETECT_OUTDATED_WORKAROUNDS
+#define BOOST_OPEN_PAREN (
+#define BOOST_TESTED_AT(value)  > value) ?(-1): BOOST_OPEN_PAREN 1
+#else
+#define BOOST_TESTED_AT(value) != ((value) - (value))
+#endif
 
-# else
+#else
 
-#  define BOOST_WORKAROUND(symbol, test) 0
+#define BOOST_WORKAROUND(symbol, test) 0
 
-# endif 
+#endif
 
-#endif // WORKAROUND_DWA2002126_HPP
+#endif  // WORKAROUND_DWA2002126_HPP

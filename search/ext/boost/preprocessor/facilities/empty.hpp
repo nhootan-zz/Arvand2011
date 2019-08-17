@@ -1,4 +1,4 @@
-# /* Copyright (C) 2001
+#/* Copyright (C) 2001
 #  * Housemarque Oy
 #  * http://www.housemarque.com
 #  *
@@ -7,15 +7,15 @@
 #  * http://www.boost.org/LICENSE_1_0.txt)
 #  */
 #
-# /* Revised by Paul Mensonides (2002) */
+#/* Revised by Paul Mensonides (2002) */
 #
-# /* See http://www.boost.org for most recent version. */
+#/* See http://www.boost.org for most recent version. */
 #
-# ifndef BOOST_PREPROCESSOR_FACILITIES_EMPTY_HPP
-# define BOOST_PREPROCESSOR_FACILITIES_EMPTY_HPP
+#ifndef BOOST_PREPROCESSOR_FACILITIES_EMPTY_HPP
+#define BOOST_PREPROCESSOR_FACILITIES_EMPTY_HPP
 #
-# /* BOOST_PP_EMPTY */
+#/* BOOST_PP_EMPTY */
 #
-# define BOOST_PP_EMPTY()
+#define BOOST_PP_EMPTY()
 #
-# endif
+#endif

@@ -1,6 +1,6 @@
 //  (C) Copyright Eric Jourdanneau, Joel Falcou 2010
-//  Use, modification and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org for most recent version.
@@ -8,14 +8,15 @@
 //  NVIDIA CUDA C++ compiler setup
 
 #ifndef BOOST_COMPILER
-#  define BOOST_COMPILER "NVIDIA CUDA C++ Compiler"
+#define BOOST_COMPILER "NVIDIA CUDA C++ Compiler"
 #endif
 
 // NVIDIA Specific support
-// BOOST_GPU_ENABLED : Flag a function or a method as being enabled on the host and device
+// BOOST_GPU_ENABLED : Flag a function or a method as being enabled on the host
+// and device
 #define BOOST_GPU_ENABLED __host__ __device__
 
-// Boost support macro for NVCC 
+// Boost support macro for NVCC
 // NVCC Basically behaves like some flavor of MSVC6 + some specific quirks
 #define BOOST_NO_INCLASS_MEMBER_INITIALIZATION
 #define BOOST_MSVC6_MEMBER_TEMPLATES
@@ -84,4 +85,3 @@
 #define BOOST_NO_0X_HDR_CODECVT
 #define BOOST_NO_0X_HDR_CHRONO
 #define BOOST_NO_0X_HDR_ARRAY
-

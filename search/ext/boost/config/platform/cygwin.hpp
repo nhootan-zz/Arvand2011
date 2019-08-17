@@ -1,6 +1,6 @@
-//  (C) Copyright John Maddock 2001 - 2003. 
-//  Use, modification and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  (C) Copyright John Maddock 2001 - 2003.
+//  Use, modification and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org for most recent version.
@@ -18,17 +18,18 @@
 // revert to native Win threads.
 #define BOOST_HAS_UNISTD_H
 #include <unistd.h>
-#if defined(_POSIX_THREADS) && (_POSIX_THREADS+0 >= 0) && !defined(BOOST_HAS_WINTHREADS)
-#  define BOOST_HAS_PTHREADS
-#  define BOOST_HAS_SCHED_YIELD
-#  define BOOST_HAS_GETTIMEOFDAY
-#  define BOOST_HAS_PTHREAD_MUTEXATTR_SETTYPE
-#  define BOOST_HAS_SIGACTION
+#if defined(_POSIX_THREADS) && (_POSIX_THREADS + 0 >= 0) && \
+    !defined(BOOST_HAS_WINTHREADS)
+#define BOOST_HAS_PTHREADS
+#define BOOST_HAS_SCHED_YIELD
+#define BOOST_HAS_GETTIMEOFDAY
+#define BOOST_HAS_PTHREAD_MUTEXATTR_SETTYPE
+#define BOOST_HAS_SIGACTION
 #else
-#  if !defined(BOOST_HAS_WINTHREADS)
-#     define BOOST_HAS_WINTHREADS
-#  endif
-#  define BOOST_HAS_FTIME
+#if !defined(BOOST_HAS_WINTHREADS)
+#define BOOST_HAS_WINTHREADS
+#endif
+#define BOOST_HAS_FTIME
 #endif
 
 //
@@ -46,10 +47,5 @@
 // Cygwin lies about XSI conformance, there is no nl_types.h:
 //
 #ifdef BOOST_HAS_NL_TYPES_H
-#  undef BOOST_HAS_NL_TYPES_H
+#undef BOOST_HAS_NL_TYPES_H
 #endif
- 
-
-
-
-

@@ -1,7 +1,7 @@
 // (C) Copyright Douglas Gregor 2010
 //
-//  Use, modification and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org for most recent version.
@@ -10,16 +10,16 @@
 
 #if __has_feature(cxx_exceptions) && !defined(BOOST_NO_EXCEPTIONS)
 #else
-#  define BOOST_NO_EXCEPTIONS
+#define BOOST_NO_EXCEPTIONS
 #endif
 
 #if __has_feature(cxx_rtti)
 #else
-#  define BOOST_NO_RTTI
+#define BOOST_NO_RTTI
 #endif
 
 #if defined(__int64)
-#  define BOOST_HAS_MS_INT64
+#define BOOST_HAS_MS_INT64
 #endif
 
 #define BOOST_HAS_NRVO
@@ -55,9 +55,8 @@
 #define BOOST_NO_EXTERN_TEMPLATE
 
 #ifndef BOOST_COMPILER
-#  define BOOST_COMPILER "Clang version " __clang_version__
+#define BOOST_COMPILER "Clang version " __clang_version__
 #endif
 
 // Macro used to identify the Clang compiler.
 #define BOOST_CLANG 1
-

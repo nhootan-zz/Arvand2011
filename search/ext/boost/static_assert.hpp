@@ -1,6 +1,6 @@
 //  (C) Copyright John Maddock 2000.
-//  Use, modification and distribution are subject to the 
-//  Boost Software License, Version 1.0. (See accompanying file 
+//  Use, modification and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/static_assert for documentation.
@@ -23,36 +23,43 @@
 #define BOOST_BUGGY_INTEGRAL_CONSTANT_EXPRESSIONS
 #endif
 
-#if defined(__GNUC__) && (__GNUC__ == 3) && ((__GNUC_MINOR__ == 3) || (__GNUC_MINOR__ == 4))
+#if defined(__GNUC__) && (__GNUC__ == 3) && \
+    ((__GNUC_MINOR__ == 3) || (__GNUC_MINOR__ == 4))
 // gcc 3.3 and 3.4 don't produce good error messages with the default version:
-#  define BOOST_SA_GCC_WORKAROUND
+#define BOOST_SA_GCC_WORKAROUND
 #endif
 
 //
 // If the compiler issues warnings about old C style casts,
 // then enable this:
 //
-#if defined(__GNUC__) && ((__GNUC__ > 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 4)))
-#  define BOOST_STATIC_ASSERT_BOOL_CAST( x ) ((x) == 0 ? false : true)
+#if defined(__GNUC__) && \
+    ((__GNUC__ > 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 4)))
+#define BOOST_STATIC_ASSERT_BOOL_CAST(x) ((x) == 0 ? false : true)
 #else
-#  define BOOST_STATIC_ASSERT_BOOL_CAST(x) (bool)(x)
+#define BOOST_STATIC_ASSERT_BOOL_CAST(x) (bool)(x)
 #endif
 
 #ifdef BOOST_HAS_STATIC_ASSERT
-#  define BOOST_STATIC_ASSERT( B ) static_assert(B, #B)
+#define BOOST_STATIC_ASSERT(B) static_assert(B, #B)
 #else
 
-namespace boost{
+namespace boost {
 
 // HP aCC cannot deal with missing names for template value parameters
-template <bool x> struct STATIC_ASSERTION_FAILURE;
+template <bool x>
+struct STATIC_ASSERTION_FAILURE;
 
-template <> struct STATIC_ASSERTION_FAILURE<true> { enum { value = 1 }; };
+template <>
+struct STATIC_ASSERTION_FAILURE<true> {
+  enum { value = 1 };
+};
 
 // HP aCC cannot deal with missing names for template value parameters
-template<int x> struct static_assert_test{};
+template <int x>
+struct static_assert_test {};
 
-}
+}  // namespace boost
 
 //
 // Implicit instantiation requires that all member declarations be
@@ -70,63 +77,63 @@ template<int x> struct static_assert_test{};
 // message containing the name of the incomplete type.  We use
 // "STATIC_ASSERTION_FAILURE" as the type name here to generate
 // an eye catching error message.  The result of the sizeof expression is either
-// used as an enum initialiser, or as a template argument depending which version
-// is in use...
-// Note that the argument to the assert is explicitly cast to bool using old-
-// style casts: too many compilers currently have problems with static_cast
-// when used inside integral constant expressions.
+// used as an enum initialiser, or as a template argument depending which
+// version is in use... Note that the argument to the assert is explicitly cast
+// to bool using old- style casts: too many compilers currently have problems
+// with static_cast when used inside integral constant expressions.
 //
 #if !defined(BOOST_BUGGY_INTEGRAL_CONSTANT_EXPRESSIONS)
 
 #if defined(BOOST_MSVC) && (BOOST_MSVC < 1300)
 // __LINE__ macro broken when -ZI is used see Q199057
 // fortunately MSVC ignores duplicate typedef's.
-#define BOOST_STATIC_ASSERT( B ) \
-   typedef ::boost::static_assert_test<\
-      sizeof(::boost::STATIC_ASSERTION_FAILURE< (bool)( B ) >)\
-      > boost_static_assert_typedef_
+#define BOOST_STATIC_ASSERT(B)                       \
+  typedef ::boost::static_assert_test<sizeof(        \
+      ::boost::STATIC_ASSERTION_FAILURE<(bool)(B)>)> \
+      boost_static_assert_typedef_
 #elif defined(BOOST_MSVC)
-#define BOOST_STATIC_ASSERT( B ) \
-   typedef ::boost::static_assert_test<\
-      sizeof(::boost::STATIC_ASSERTION_FAILURE< BOOST_STATIC_ASSERT_BOOL_CAST ( B ) >)>\
-         BOOST_JOIN(boost_static_assert_typedef_, __COUNTER__)
+#define BOOST_STATIC_ASSERT(B)                                              \
+  typedef ::boost::static_assert_test<sizeof(                               \
+      ::boost::STATIC_ASSERTION_FAILURE<BOOST_STATIC_ASSERT_BOOL_CAST(B)>)> \
+      BOOST_JOIN(boost_static_assert_typedef_, __COUNTER__)
 #elif defined(BOOST_INTEL_CXX_VERSION) || defined(BOOST_SA_GCC_WORKAROUND)
-// agurt 15/sep/02: a special care is needed to force Intel C++ issue an error 
+// agurt 15/sep/02: a special care is needed to force Intel C++ issue an error
 // instead of warning in case of failure
-# define BOOST_STATIC_ASSERT( B ) \
-    typedef char BOOST_JOIN(boost_static_assert_typedef_, __LINE__) \
-        [ ::boost::STATIC_ASSERTION_FAILURE< BOOST_STATIC_ASSERT_BOOL_CAST( B ) >::value ]
+#define BOOST_STATIC_ASSERT(B)                                         \
+  typedef char BOOST_JOIN(boost_static_assert_typedef_,                \
+                          __LINE__)[::boost::STATIC_ASSERTION_FAILURE< \
+      BOOST_STATIC_ASSERT_BOOL_CAST(B)>::value]
 #elif defined(__sgi)
 // special version for SGI MIPSpro compiler
-#define BOOST_STATIC_ASSERT( B ) \
-   BOOST_STATIC_CONSTANT(bool, \
-     BOOST_JOIN(boost_static_assert_test_, __LINE__) = ( B )); \
-   typedef ::boost::static_assert_test<\
-     sizeof(::boost::STATIC_ASSERTION_FAILURE< \
-       BOOST_JOIN(boost_static_assert_test_, __LINE__) >)>\
-         BOOST_JOIN(boost_static_assert_typedef_, __LINE__)
+#define BOOST_STATIC_ASSERT(B)                                                \
+  BOOST_STATIC_CONSTANT(                                                      \
+      bool, BOOST_JOIN(boost_static_assert_test_, __LINE__) = (B));           \
+  typedef ::boost::static_assert_test<sizeof(                                 \
+      ::boost::STATIC_ASSERTION_FAILURE<BOOST_JOIN(boost_static_assert_test_, \
+                                                   __LINE__)>)>               \
+      BOOST_JOIN(boost_static_assert_typedef_, __LINE__)
 #elif BOOST_WORKAROUND(__MWERKS__, <= 0x3003)
 // special version for CodeWarrior <= 8.x
-#define BOOST_STATIC_ASSERT( B ) \
-   BOOST_STATIC_CONSTANT(int, \
-     BOOST_JOIN(boost_static_assert_test_, __LINE__) = \
-       sizeof(::boost::STATIC_ASSERTION_FAILURE< BOOST_STATIC_ASSERT_BOOL_CAST( B ) >) )
+#define BOOST_STATIC_ASSERT(B)                                                 \
+  BOOST_STATIC_CONSTANT(int, BOOST_JOIN(boost_static_assert_test_, __LINE__) = \
+                                 sizeof(::boost::STATIC_ASSERTION_FAILURE<     \
+                                        BOOST_STATIC_ASSERT_BOOL_CAST(B)>))
 #else
 // generic version
-#define BOOST_STATIC_ASSERT( B ) \
-   typedef ::boost::static_assert_test<\
-      sizeof(::boost::STATIC_ASSERTION_FAILURE< BOOST_STATIC_ASSERT_BOOL_CAST( B ) >)>\
-         BOOST_JOIN(boost_static_assert_typedef_, __LINE__)
+#define BOOST_STATIC_ASSERT(B)                                              \
+  typedef ::boost::static_assert_test<sizeof(                               \
+      ::boost::STATIC_ASSERTION_FAILURE<BOOST_STATIC_ASSERT_BOOL_CAST(B)>)> \
+      BOOST_JOIN(boost_static_assert_typedef_, __LINE__)
 #endif
 
 #else
 // alternative enum based implementation:
-#define BOOST_STATIC_ASSERT( B ) \
-   enum { BOOST_JOIN(boost_static_assert_enum_, __LINE__) \
-      = sizeof(::boost::STATIC_ASSERTION_FAILURE< (bool)( B ) >) }
+#define BOOST_STATIC_ASSERT(B)                               \
+  enum {                                                     \
+    BOOST_JOIN(boost_static_assert_enum_, __LINE__) =        \
+        sizeof(::boost::STATIC_ASSERTION_FAILURE<(bool)(B)>) \
+  }
 #endif
-#endif // ndef BOOST_HAS_STATIC_ASSERT
+#endif  // ndef BOOST_HAS_STATIC_ASSERT
 
-#endif // BOOST_STATIC_ASSERT_HPP
-
-
+#endif  // BOOST_STATIC_ASSERT_HPP

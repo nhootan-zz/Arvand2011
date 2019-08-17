@@ -52,7 +52,7 @@ To generate many plans, use:
 
 To get a description of the available parameters for Arvand use
 ```
-search/downward-1 --help mrw
+search/downward-2 --help mrw
 ```
 
 Please control the memory and time limits (ulimit) from outside the program.
