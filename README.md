@@ -2,7 +2,7 @@
 
 This is the "official" distribution of Arvand2011.
 
-## Licence
+## License
 
 Arvand2011 is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -63,6 +63,6 @@ Email (in domain gmail.com): nhootan
 
 ## References
 
-1- Hootan Nakhost. Random Walk Planning: Theory, Practice, and Application. PhD thesis, University of Alberta, 2013.
-2- Hootan Nakhost, and Martin Mu ̈ller. Towards a second generation random walk planner: an experimental exploration. Proceedings of the 23rd International Joint Conference on Artificial Intelligence (IJCAI'13), 2013.
-3- Hootan Nakhost and Martin Mu ̈ller, Monte-Carlo Exploration for Deterministic Planning. Proceedings of the International Joint Conference on Artificial Intelligence (IJCAI’09), 2009.
+1. Hootan Nakhost. Random Walk Planning: Theory, Practice, and Application. PhD thesis, University of Alberta, 2013.
+2. Hootan Nakhost, and Martin Mu ̈ller. Towards a second generation random walk planner: an experimental exploration. Proceedings of the 23rd International Joint Conference on Artificial Intelligence (IJCAI'13), 2013.
+3. Hootan Nakhost and Martin Mu ̈ller, Monte-Carlo Exploration for Deterministic Planning. Proceedings of the International Joint Conference on Artificial Intelligence (IJCAI’09), 2009.
